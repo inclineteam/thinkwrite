@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { signOut, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -12,16 +12,16 @@ const Header: React.FC = () => {
   const { data: session, status } = useSession();
 
   let left = (
-    <div className="left">
+    <div className="left bold"  data-active={isActive('/')}>
       <Link href="/">
-        <a className="bold" data-active={isActive('/')}>
+        <div>
           Thinkwrite Logo
-        </a>
+          </div>
       </Link>
-      <Link href="/">
-        <a className="bold" data-active={isActive('/')}>
-          Feed
-        </a>
+      <Link href="/"  className="bold" data-active={isActive('/')}>    
+      <div>
+        Feed
+      </div>  
       </Link>
       <style jsx>{`
         .bold {
@@ -49,11 +49,9 @@ const Header: React.FC = () => {
 
   if (status === 'loading') {
     left = (
-      <div className="left">
+      <div className="left bold" data-active={isActive('/')}>
         <Link href="/">
-          <a className="bold" data-active={isActive('/')}>
             Feed
-          </a>
         </Link>
         <style jsx>{`
           .bold {
@@ -91,8 +89,8 @@ const Header: React.FC = () => {
   if (!session) {
     right = (
       <div className="right">
-        <Link href="/api/auth/signin">
-          <a data-active={isActive('/signup')}>Log in</a>
+        <Link href="/api/auth/signin" data-active={isActive('/signup')}>
+           Log in
         </Link>
         <style jsx>{`
           a {
@@ -121,14 +119,12 @@ const Header: React.FC = () => {
 
   if (session) {
     left = (
-      <div className="left">
+      <div className="left bold" data-active={isActive('/')}>
         <Link href="/">
-          <a className="bold" data-active={isActive('/')}>
             Feed
-          </a>
         </Link>
-        <Link href="/drafts">
-          <a data-active={isActive('/drafts')}>My drafts</a>
+        <Link href="/drafts"  data-active={isActive('/drafts')}>
+          My drafts
         </Link>
         <style jsx>{`
           .bold {
@@ -158,11 +154,11 @@ const Header: React.FC = () => {
         </p>
         <Link href="/create">
           <button>
-            <a>New post</a>
+            New post
           </button>
         </Link>
         <button onClick={() => signOut()}>
-          <a>Log out</a>
+          Log out
         </button>
         <style jsx>{`
           a {
