@@ -1,3 +1,5 @@
+// pages/create.tsx
+
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import Router from 'next/router';
@@ -6,7 +8,7 @@ const Draft: React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
 
-const submitData = async (e: React.SyntheticEvent) => {
+  const submitData = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     try {
       const body = { title, content };
@@ -19,6 +21,10 @@ const submitData = async (e: React.SyntheticEvent) => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleCancel = () => {
+    Router.push('/');
   };
 
   return (
@@ -41,9 +47,9 @@ const submitData = async (e: React.SyntheticEvent) => {
             value={content}
           />
           <input disabled={!content || !title} type="submit" value="Create" />
-          <a className="back" href="#" onClick={() => Router.push('/')}>
+          <button className="back" type="button" onClick={handleCancel}>
             or Cancel
-          </a>
+          </button>
         </form>
       </div>
       <style jsx>{`
@@ -72,6 +78,12 @@ const submitData = async (e: React.SyntheticEvent) => {
 
         .back {
           margin-left: 1rem;
+          background: none;
+          border: none;
+          color: blue;
+          cursor: pointer;
+          text-decoration: underline;
+          padding: 0;
         }
       `}</style>
     </Layout>
